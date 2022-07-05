@@ -5,7 +5,7 @@ sap.ui.define([
 
     // Firebase-config retrieved from the Firebase-console
     const firebaseConfig = {
-        apiKey: "AIzaSyDT509pgwtJz6fmFBYBbr0tEp1ft6UB_9U",
+        apiKey: "",
         authDomain: "customauthcapapp.firebaseapp.com",
         projectId: "customauthcapapp",
         storageBucket: "customauthcapapp.appspot.com",
