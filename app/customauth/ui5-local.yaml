@@ -2,38 +2,40 @@
 
 specVersion: "2.5"
 metadata:
-  name: customauth.customauth
+    name: customauth.customauth
 type: application
 framework:
-  name: SAPUI5
-  version: 1.102.1
-  libraries:
-    - name: sap.m
-    - name: sap.ui.core
-    - name: sap.f
-    - name: sap.suite.ui.generic.template
-    - name: sap.ui.comp
-    - name: sap.ui.generic.app
-    - name: sap.ui.table
-    - name: sap.ushell
-    - name: themelib_sap_fiori_3
+    name: SAPUI5
+    version: 1.102.1
+    libraries:
+        - name: sap.m
+        - name: sap.ui.core
+        - name: sap.f
+        - name: sap.suite.ui.generic.template
+        - name: sap.ui.comp
+        - name: sap.ui.generic.app
+        - name: sap.ui.table
+        - name: sap.ushell
+        - name: themelib_sap_fiori_3
 server:
-  customMiddleware:
-    - name: fiori-tools-appreload
-      afterMiddleware: compression
-      configuration:
-        port: 35729
-        path: webapp
-        delay: 300
-    - name: fiori-tools-proxy
-      afterMiddleware: compression
-      configuration:
-        ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
-        backend:
-          - path: /sap
-            url: http://localhost
-    - name: fiori-tools-preview
-      afterMiddleware: fiori-tools-appreload
-      configuration:
-        component: customauth.customauth
-        ui5Theme: sap_fiori_3
+    customMiddleware:
+        - name: fiori-tools-appreload
+          afterMiddleware: compression
+          configuration:
+              port: 35729
+              path: webapp
+              delay: 300
+        - name: fiori-tools-proxy
+          afterMiddleware: compression
+          configuration:
+              ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+              backend:
+                  - path: /sap
+                    url: http://localhost
+              custoauthdest:
+                  url: https://localhost:4004
+        - name: fiori-tools-preview
+          afterMiddleware: fiori-tools-appreload
+          configuration:
+              component: customauth.customauth
+              ui5Theme: sap_fiori_3

@@ -2,9 +2,10 @@ sap.ui.define([
     "sap/ui/core/UIComponent",
     "sap/ui/Device",
     "customauth/customauth/model/models",
-    "./firebase/Firebase"
+    "customauth/customauth/firebase/Firebase",
+    "customauth/customauth/controller/BaseController"
 ],
-    function (UIComponent, Device, models, Firebase) {
+    function (UIComponent, Device, models, Firebase, BaseController) {
         "use strict";
 
         return UIComponent.extend("customauth.customauth.Component", {
@@ -17,7 +18,7 @@ sap.ui.define([
              * @public
              * @override
              */
-            init: function () {
+            init: async function () {
                 // call the base component's init function
                 UIComponent.prototype.init.apply(this, arguments);
 
@@ -29,7 +30,7 @@ sap.ui.define([
 
                 // set Firebase Model
                 this.setModel(Firebase.initializeFirebase(), "firebase");
-                this.getModel("firebase").setProperty("/auth", window.localStorage.getItem('auth') === 'true');
+                
             }
         });
     }

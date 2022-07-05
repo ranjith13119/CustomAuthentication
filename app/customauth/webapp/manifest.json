@@ -17,11 +17,9 @@
         },
         "dataSources": {
             "mainService": {
-                "uri": "/sap/opu/odata/",
+                "uri": "v2/catalog/",
                 "type": "OData",
                 "settings": {
-                    "annotations": [],
-                    "localUri": "localService/metadata.xml",
                     "odataVersion": "2.0"
                 }
             }
@@ -109,20 +107,34 @@
             },
             "routes": [
                 {
-                    "name": "RouteApp",
+                    "name": "login",
                     "pattern": "login",
                     "target": [
-                        "TargetApp"
+                        "login"
+                    ]
+                },
+                {
+                    "name": "Overview",
+                    "pattern": "Overview",
+                    "target": [
+                        "Overview"
                     ]
                 }
             ],
             "targets": {
-                "TargetApp": {
+                "login": {
                     "viewType": "XML",
                     "transition": "slide",
                     "clearControlAggregation": false,
-                    "viewId": "App",
-                    "viewName": "App"
+                    "viewId": "login",
+                    "viewName": "Login"
+                },
+                "Overview": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewName": "OverView",
+                    "viewId": "Overview"
                 }
             }
         },

@@ -1,0 +1,12 @@
+<mvc:View
+    controllerName="customauth.customauth.controller.Login"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+>
+    <Page id="Loginpage" title="{i18n>title}">
+        <content >
+            <Button text = "Login With Google" press = ".onGoogleLoginBtnPress" visible="{= ${firebase>/auth} === false }"/>
+        </content>
+    </Page>
+</mvc:View>

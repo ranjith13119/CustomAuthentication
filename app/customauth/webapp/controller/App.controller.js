@@ -1,43 +1,28 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller"
+    "sap/ui/core/mvc/Controller",
+    "./BaseController",
+    "sap/m/MessageToast"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller) {
+    function (Controller, BaseController, MessageToast) {
         "use strict";
 
         return Controller.extend("customauth.customauth.controller.App", {
             onInit: async function () {
-                this.fbModel = await this.getOwnerComponent().getModel("firebase");
-            },
-
-            onGoogleBtnPress: async function () {
-                var that = this;
-                const userCred = await firebase.auth()
-                    .signInWithPopup(new firebase.auth.GoogleAuthProvider());
-
-                if (userCred) {
-                    that.fbModel.setProperty("/auth", true);
-                    that.fbModel.setProperty("/userInformation", userCred);
-                    window.localStorage.setItem('auth', 'true');
+                var oComponent = this.getOwnerComponent();
+                this.fbModel = await oComponent.getModel("firebase");
+                this.oModel = await oComponent.getModel();
+                this.oRouter = oComponent.getRouter();
+                const isAuthorized = await BaseController.isAuthorized(this.oModel);
+                if (isAuthorized) {
+                    this.fbModel.setProperty("/auth", true);
+                    this.oRouter.navTo("Overview");
+                } else {
+                    this.fbModel.setProperty("/auth", false);
+                    this.oRouter.navTo("login");
                 }
-
-                firebase.auth().onAuthStateChanged((userCredd) => {
-                    if (userCredd) {
-                        that.fbModel.setProperty("/auth", true);
-                        userCredd.getIdToken().then((token) => {
-                            that.fbModel.setProperty("/token", token);
-                            window.localStorage.setItem('auth', 'true');
-                        });
-                    }
-                });
-            },
-
-            onLogoutBtnPress: function () {
-                window.localStorage.setItem('auth', 'false');
-                this.fbModel.setProperty("/auth", false);
-                this.fbModel.setProperty("/userInformation", null);
             }
         });
     });
